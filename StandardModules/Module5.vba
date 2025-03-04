@@ -1,5 +1,5 @@
 '//////////////////////////////////////////////////////////////////////////
-'// Module5: Others
+'// Module5: InsertRows
 '//////////////////////////////////////////////////////////////////////////
 
 
@@ -71,6 +71,54 @@ Sub HighlightTextInCell()
     
     MsgBox ("HighlightTextInCell完了")
     
+End Sub
+
+
+
+' HighlightTextInCell Macro
+' Keyboard Shortcut: -
+' 処理概要: 家計簿用
+Sub Kakeibo_FillAColumnBasedOnB()
+    Dim rng As Range
+    Dim cell As Range
+    Dim startRow As Long
+    Dim endRow As Long
+    Dim fillValue As String
+    
+    ' 選択範囲の最初の行と最後の行を取得
+    If TypeName(Selection) <> "Range" Then Exit Sub
+    Set rng = Selection
+    
+    startRow = rng.Row
+    endRow = rng.Rows(rng.Rows.Count).Row
+    
+    Dim i As Long
+    i = startRow
+    
+    Do While i <= endRow
+        ' B列が空の行を探す
+        If Cells(i, 2).Value = "" Then
+            ' 次の行のB列の値を取得
+            If i + 1 <= endRow And Cells(i + 1, 2).Value <> "" Then
+                fillValue = Cells(i + 1, 2).Value
+                
+                ' B列が空でない行を探してA列にセット
+                Dim j As Long
+                j = i + 1
+                Do While j <= endRow And Cells(j, 2).Value <> ""
+                    Cells(j, 1).Value = fillValue
+                    j = j + 1
+                Loop
+                
+                ' 次の空のB列の行の手前まで進める
+                i = j
+            Else
+                i = i + 1
+            End If
+        Else
+            i = i + 1
+        End If
+    Loop
 End Sub
 
 

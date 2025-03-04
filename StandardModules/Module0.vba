@@ -5,7 +5,7 @@
 '// Module2: AddShape
 '// Module3: Image
 '// Module4: TextBox
-'// Module5: Others
+'// Module5: InsertRowsOthers
 '// Module6: Unpublished Side
 '// Module7: Draft
 '// Module8: not used
@@ -62,25 +62,25 @@ Sub ExportModules()
     Dim moduleName As String
     Dim exportPath As String
     
-    ' ★要確認★
-    moduleCount = 7
+    ' ログイン中Winユーザーのドキュメントフォルダのパスを取得
+    Dim docPath As String
+    docPath = Environ("USERPROFILE") & "\Documents\"
+'    MsgBox docPath
+
     
+    ' ★要確認★
+    moduleCount = 9
+
     For iNumber = 0 To moduleCount
         ' エクスポートするモジュールの名前と保存先
         moduleName = "Module" & iNumber
-        exportPath = "C:\path\to\save\Module" & iNumber & ".bas"
-        
+        exportPath = docPath & "develop\excel_vba\sources_git\ショートカット一覧\StandardModules\Module" & iNumber & ".vba"
+
         ' モジュールをエクスポート
         ThisWorkbook.VBProject.VBComponents(moduleName).Export exportPath
     Next
     
-
-    ' エクスポートするモジュールの名前と保存先
-    moduleName = "Module" & iNumber
-    exportPath = "C:\path\to\save\Module" & iNumber & ".bas"
-    
-    ' モジュールをエクスポート
-    ThisWorkbook.VBProject.VBComponents(moduleName).Export exportPath
+    Set objShell = Nothing
     
 End Sub
 
