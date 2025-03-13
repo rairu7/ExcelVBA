@@ -1,5 +1,5 @@
 '//////////////////////////////////////////////////////////////////////////
-'// Module5: Others
+'// Module5: Search
 '//////////////////////////////////////////////////////////////////////////
 
 
@@ -27,18 +27,20 @@ Sub HighlightTextInCell()
     '★結果のセル書式設定★
     highlightColor = RGB(255, 0, 0)  ' 赤色
 '    highlightColor = RGB(0, 0, 255)  ' 青色
+''    highlightColor = RGB(255, 249, 79)  ' 黄色
     boldFlg = False            ' 太字にする場合はTrue
     
     
     '★走査セル上限数設定（無限ループ対策）★
-    supreme = 500           ' 変更注意
+    supreme = 1000           ' 変更注意
     
     ' 無限ループ対策
-    intCnt = intCnt + 1
-    If intCnt > supreme Then
-        MsgBox ("上限オーバーです。選択範囲を見直してください")
+    If Selection.Cells.Count > supreme Then
+        MsgBox ("上限オーバーです。選択範囲を見直してください.")
         Exit Sub
     End If
+    
+    On Error GoTo ErrorHandler
     
     ' 選択範囲内の各セルを処理
     intCnt = 1
@@ -63,67 +65,20 @@ Sub HighlightTextInCell()
                     If boldFlg = True Then
                         cell.Characters(foundPos, Len(searchText)).Font.Bold = True
                     End If
-                    startPos = foundPos + Len(searchText) '// 考えて納得する
+                    '// 次の検索位置をリセット
+                    startPos = foundPos + Len(searchText)
                 End If
             Loop While foundPos > 0
         End If
     Next cell
     
     MsgBox ("HighlightTextInCell完了")
+    Exit Sub
+    
+ErrorHandler:
+    MsgBox ("エラー終了")
     
 End Sub
 
-
-
-' シート一覧を取得
-' GetWorkbookAllSheets Macro
-' Keyboard Shortcut: Ctrl+Shift+W
-Sub GetWorkbookAllSheets()
-    Dim ws As Worksheet
-    Dim newSheet As Worksheet
-    Dim i As Integer
-    
-    ' アクティブシートを取得
-    Dim activeIndex As Integer
-    activeIndex = ActiveSheet.Index
-    
-    ' 新しいシートをアクティブシートの右に挿入
-    Set newSheet = ActiveWorkbook.Sheets.Add(After:=ActiveWorkbook.Sheets(activeIndex))
-    newSheet.Name = "シート一覧"
-    
-    ' シート一覧を書き出し
-    With newSheet
-        ' 初期化
-        .Cells.Clear
-        ' ヘッダーを書く
-        .Cells(1, 1).Value = "シート名"
-        i = 2 ' データの開始行
-        ' 各シート名を取得
-        For Each ws In ActiveWorkbook.Sheets
-            .Cells(i, 1).Value = ws.Name
-            i = i + 1
-        Next ws
-    End With
-End Sub
-
-
-
-' 起動中のVSCodeでファイルを開く
-' OpenInVSCode Macro
-' Keyboard Shortcut: Ctrl+Shift+V
-Sub OpenInVSCode()
-    Dim filePath As String
-    Dim vscodePath As String
-
-    ' 選択中セルのファイルパスを取得
-    filePath = ActiveCell.Value
-
-    ' VSCodeのインストールパス（パスを適宜変更してください）
-    vscodePath = "C:\Program Files\Microsoft VS Code\Code.exe"
-'    vscodePath = "C:\Users\ユーザー名\AppData\Local\Programs\Microsoft VS Code\Code.exe"
-
-    ' VSCodeを起動してファイルを開く
-    Shell """" & vscodePath & """ """ & filePath & """", vbNormalFocus
-End Sub
 
 

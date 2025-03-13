@@ -5,11 +5,17 @@
 '// Module2: AddShape
 '// Module3: Image
 '// Module4: TextBox
-'// Module5: Others
-'// Module6: Unpublished Side
-'// Module7: Draft
-'// Module8: not used
+'// Module5: Search
+'// Module6: InsertRows, InsertColumns
+'// Module7: MakeSheets
+'// Module8: OpenInOtherApp
 '// Module9: not used
+'// ModuleA: not used
+'// ModuleB: not used
+'// ModuleC: not used
+'// ModuleD: Others
+'// ModuleE: Draft
+'// ModuleF: Unpublished Side
 '//////////////////////////////////////////////////////////////////////////
 
 '//////////////////////////////////////////////////////////////////////////
@@ -62,31 +68,62 @@ Sub ExportModules()
     Dim moduleName As String
     Dim exportPath As String
     
-    ' ★要確認★
-    moduleCount = 7
+    ' ログイン中Winユーザーのドキュメントフォルダのパス
+    Dim docPath As String
+    docPath = Environ("USERPROFILE") & "\Documents\"
+'    MsgBox docPath
+
+
+    ' エクスポート先
+    Dim exportDir As String
+    exportDir = docPath & "develop\excel_vba\sources_git\ショートカット一覧\StandardModules\"
     
+    ' エクスポートするファイル形式
+    Dim extension As String
+'    extension = ".bas"
+    extension = ".vba"
+    
+    ' ★要確認★
+    moduleCount = 9
+
     For iNumber = 0 To moduleCount
         ' エクスポートするモジュールの名前と保存先
         moduleName = "Module" & iNumber
-        exportPath = "C:\path\to\save\Module" & iNumber & ".bas"
-        
+        exportPath = exportDir & moduleName & extension
+
         ' モジュールをエクスポート
         ThisWorkbook.VBProject.VBComponents(moduleName).Export exportPath
     Next
     
-
-    ' エクスポートするモジュールの名前と保存先
-    moduleName = "Module" & iNumber
-    exportPath = "C:\path\to\save\Module" & iNumber & ".bas"
+    Dim Alphas(6) As String
+    Alphas(0) = "A"
+    Alphas(1) = "B"
+    Alphas(2) = "C"
+    Alphas(3) = "D"
+    Alphas(4) = "E"
+    Alphas(5) = "F"
     
-    ' モジュールをエクスポート
-    ThisWorkbook.VBProject.VBComponents(moduleName).Export exportPath
+    For iNumber = 0 To 5
+        ' エクスポートするモジュールの名前と保存先
+        moduleName = "Module" & Alphas(iNumber)
+        exportPath = exportDir & moduleName & extension
+
+        ' モジュールをエクスポート
+        ThisWorkbook.VBProject.VBComponents(moduleName).Export exportPath
+    Next
+    
+    Set objShell = Nothing
     
 End Sub
 
 Sub ExportForm()
     Dim formName As String
     Dim exportPath As String
+    
+    ' ログイン中Winユーザーのドキュメントフォルダのパスを取得
+    Dim docPath As String
+    docPath = Environ("USERPROFILE") & "\Documents\"
+'    MsgBox docPath
     
     ' エクスポートするフォームの名前と保存先
     formName = "frmSearchText"
