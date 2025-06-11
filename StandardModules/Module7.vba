@@ -1,3 +1,4 @@
+Attribute VB_Name = "Module7"
 '//////////////////////////////////////////////////////////////////////////
 '// Module7: MakeSheets
 '//////////////////////////////////////////////////////////////////////////
@@ -18,6 +19,7 @@ End Sub
 ' WorkbookSheetList Macro
 ' Keyboard Shortcut: Ctrl+Shift+W
 Sub WorkbookSheetList()
+Attribute WorkbookSheetList.VB_ProcData.VB_Invoke_Func = "W\n14"
     Dim ws As Worksheet
     Dim newSheet As Worksheet
     Dim i As Integer

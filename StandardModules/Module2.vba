@@ -1,3 +1,4 @@
+Attribute VB_Name = "Module2"
 '//////////////////////////////////////////////////////////////////////////
 '// Module2: AddShape
 '//////////////////////////////////////////////////////////////////////////
@@ -6,6 +7,7 @@
 ' FloatingComment Macro
 ' Keyboard Shortcut: Ctrl+Shift+F
 Sub FloatingComment()
+Attribute FloatingComment.VB_ProcData.VB_Invoke_Func = "F\n14"
     
     ActiveSheet.Shapes.AddShape(msoShapeRectangularCallout, Selection.Cells(1, 1).Left, Selection.Cells(1, 1).Top, 210, 100) _
         .Select
@@ -29,6 +31,7 @@ End Sub
 ' InsertArrow Macro
 ' Keyboard Shortcut: Ctrl+Shift+A
 Sub InsertArrow()
+Attribute InsertArrow.VB_ProcData.VB_Invoke_Func = "A\n14"
 
     ActiveSheet.Shapes.AddConnector(msoConnectorStraight, Selection.Cells(1, 1).Left, _
         Selection.Cells(1, 1).Top, Selection.Cells(1, 1).Left + 100, Selection.Cells(1, 1).Top + 0).Select
@@ -54,6 +57,7 @@ End Sub
 ' InsertRedRectangle Macro
 ' Keyboard Shortcut: Ctrl+Shift+I
 Sub InsertRedRectangle()
+Attribute InsertRedRectangle.VB_ProcData.VB_Invoke_Func = "I\n14"
     ActiveSheet.Shapes.AddShape(msoShapeRectangle, Selection.Cells(1, 1).Left, Selection.Cells(1, 1).Top, 144, 69.75) _
         .Select
     Selection.ShapeRange.Fill.Visible = msoFalse

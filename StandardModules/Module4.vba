@@ -1,3 +1,4 @@
+Attribute VB_Name = "Module4"
 '//////////////////////////////////////////////////////////////////////////
 '// ■Index■
 '// Module4: TextBox
@@ -73,6 +74,7 @@ End Sub
 ' SearchTextBoxText Macro
 ' Keyboard Shortcut: Ctrl+Shift+T
 Sub SearchTextBoxText()
+Attribute SearchTextBoxText.VB_ProcData.VB_Invoke_Func = "T\n14"
     frmSearchText.Show
 End Sub
 
@@ -94,3 +96,5 @@ Sub EnableTextWrappingForSelectedTextBoxes()
         End If
     Next shp
 End Sub
+
+
