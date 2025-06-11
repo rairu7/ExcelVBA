@@ -3,6 +3,17 @@
 '//////////////////////////////////////////////////////////////////////////
 
 '
+' DrawImageBorder Macro
+' Keyboard Shortcut: Ctrl+Shift+E
+Sub DrawImageBorder()
+
+    With Selection.ShapeRange.Line
+        .Visible = msoTrue
+        .ForeColor.RGB = RGB(0, 0, 0)
+    End With
+End Sub
+
+'
 ' ImageSixtyPercent Macro
 ' Keyboard Shortcut: Ctrl+Shift+Z
 Sub ImageSixtyPercent()

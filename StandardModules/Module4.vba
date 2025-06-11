@@ -8,7 +8,8 @@
 '   GetTextBoxText
 '   ReplaceTextboxText
 '   CreateTextboxFromCellValue
-'   SearchTextInTextBoxes
+'   SearchTextBoxText
+'   EnableTextBoxesWrapping
 '//////////////////////////////////////////////////////////////////////////
 
 ' テキストボックスの値をコピー（未完成）
@@ -69,9 +70,27 @@ End Sub
 
 
 '
-' SearchTextInTextBoxes Macro
+' SearchTextBoxText Macro
 ' Keyboard Shortcut: Ctrl+Shift+T
-Sub SearchTextInTextBoxes()
+Sub SearchTextBoxText()
     frmSearchText.Show
 End Sub
 
+
+
+' 選択中テキストボックスのテキストを折り返す
+' EnableTextBoxesWrapping Macro
+' Keyboard Shortcut:-
+Sub EnableTextWrappingForSelectedTextBoxes()
+
+    Dim shp As Shape
+    
+    ' ループ（選択されたオブジェクト）
+    For Each shp In Selection.ShapeRange
+        ' テキストボックスかどうかを確認
+        If shp.Type = msoTextBox Then
+            ' テキスト折り返し
+            shp.TextFrame2.WordWrap = msoCTrue
+        End If
+    Next shp
+End Sub
