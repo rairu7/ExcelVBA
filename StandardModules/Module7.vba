@@ -39,7 +39,7 @@ Attribute WorkbookSheetList.VB_ProcData.VB_Invoke_Func = "W\n14"
         ' ヘッダーを書く
         .Cells(1, 1).Value = ActiveWorkbook.Name
         .Cells(2, 1).Value = "シート名"
-        .Cells(2, 2).Value = "リンク"
+        .Cells(2, 2).Value = "リンク数式"
         i = 3 ' データの開始行
         ' 各シート名を取得
         For Each ws In ActiveWorkbook.Sheets
@@ -49,8 +49,8 @@ Attribute WorkbookSheetList.VB_ProcData.VB_Invoke_Func = "W\n14"
         
         ' ハイパーリンク
         Range("B3:B" & (i - 1)).Select
-        Selection.FormulaR1C1 = "=HYPERLINK(""[""&R1C1&""]""&RC[-1]&""!A1"",RC[-1])"
-    
+        Selection.Formula = "=HYPERLINK(INDEX(SheetList,ROW()-2)&""!$A$1"",RIGHT(INDEX(SheetList,ROW()-2),LEN(INDEX(SheetList,ROW()-2))-2-LEN($A$1)))"
+        
         ' スタイル
         Range("A2:B2").Interior.Color = RGB(226, 239, 218)
         ' Range("B2").Interior.Color = RGB(226, 239, 218)
