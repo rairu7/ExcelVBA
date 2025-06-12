@@ -7,7 +7,7 @@ Attribute VB_Name = "Module7"
 
 
 ' CreateSheetsFromCellValue Macro
-' ‘I‘ğ’†”ÍˆÍ‚Ì’l‚Æ“¯–¼‚ÌƒV[ƒg‚ğì¬‚·‚é
+' é¸æŠä¸­ç¯„å›²ã®å€¤ã¨åŒåã®ã‚·ãƒ¼ãƒˆã‚’ä½œæˆã™ã‚‹
 ' Keyboard Shortcut: -
 Sub CreateSheetsFromCellValue()
 
@@ -15,7 +15,7 @@ End Sub
 
 
 
-' ƒV[ƒgˆê——‚ğæ“¾
+' ã‚·ãƒ¼ãƒˆä¸€è¦§ã‚’å–å¾—
 ' WorkbookSheetList Macro
 ' Keyboard Shortcut: Ctrl+Shift+W
 Sub WorkbookSheetList()
@@ -24,30 +24,38 @@ Attribute WorkbookSheetList.VB_ProcData.VB_Invoke_Func = "W\n14"
     Dim newSheet As Worksheet
     Dim i As Integer
     
-    ' ƒAƒNƒeƒBƒuƒV[ƒg‚ğæ“¾
+    ' ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã‚·ãƒ¼ãƒˆã‚’å–å¾—
     Dim activeIndex As Integer
     activeIndex = ActiveSheet.Index
     
-    ' V‚µ‚¢ƒV[ƒg‚ğƒAƒNƒeƒBƒuƒV[ƒg‚Ì‰E‚É‘}“ü
+    ' æ–°ã—ã„ã‚·ãƒ¼ãƒˆã‚’ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã‚·ãƒ¼ãƒˆã®å³ã«æŒ¿å…¥
     Set newSheet = ActiveWorkbook.Sheets.Add(After:=ActiveWorkbook.Sheets(activeIndex))
-    newSheet.Name = "ƒV[ƒgˆê——"
+    newSheet.Name = "ã‚·ãƒ¼ãƒˆä¸€è¦§"
     
-    ' ƒV[ƒgˆê——‚ğ‘‚«o‚µ
+    ' ã‚·ãƒ¼ãƒˆä¸€è¦§ã‚’æ›¸ãå‡ºã—
     With newSheet
-        ' ‰Šú‰»
+        ' åˆæœŸåŒ–
         .Cells.Clear
-        ' ƒwƒbƒ_[‚ğ‘‚­
-        .Cells(1, 1).Value = "ƒV[ƒg–¼"
-        i = 2 ' ƒf[ƒ^‚ÌŠJns
-        ' ŠeƒV[ƒg–¼‚ğæ“¾
+        ' ãƒ˜ãƒƒãƒ€ãƒ¼ã‚’æ›¸ã
+        .Cells(1, 1).Value = ActiveWorkbook.Name
+        .Cells(2, 1).Value = "ã‚·ãƒ¼ãƒˆå"
+        .Cells(2, 2).Value = "ãƒªãƒ³ã‚¯"
+        i = 3 ' ãƒ‡ãƒ¼ã‚¿ã®é–‹å§‹è¡Œ
+        ' å„ã‚·ãƒ¼ãƒˆåã‚’å–å¾—
         For Each ws In ActiveWorkbook.Sheets
             .Cells(i, 1).Value = ws.Name
             i = i + 1
         Next ws
-    
-        Range("A1").Interior.Color = RGB(226, 239, 218)
         
-        Range("A1:A" & (i - 1)).Select
+        ' ãƒã‚¤ãƒ‘ãƒ¼ãƒªãƒ³ã‚¯
+        Range("B3:B" & (i - 1)).Select
+        Selection.FormulaR1C1 = "=HYPERLINK(""[""&R1C1&""]""&RC[-1]&""!A1"",RC[-1])"
+    
+        ' ã‚¹ã‚¿ã‚¤ãƒ«
+        Range("A2:B2").Interior.Color = RGB(226, 239, 218)
+        ' Range("B2").Interior.Color = RGB(226, 239, 218)
+        
+        Range("A2:B" & (i - 1)).Select
         Selection.Borders(xlDiagonalDown).LineStyle = xlNone
         With Selection.Borders(xlEdgeLeft)
             .LineStyle = xlContinuous
@@ -93,6 +101,8 @@ Attribute WorkbookSheetList.VB_ProcData.VB_Invoke_Func = "W\n14"
         End With
     End With
         
+    Range("A1").Select
+    
 End Sub
 
 
