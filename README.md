@@ -11,6 +11,9 @@ SheetList
 ■ExportModules
 ・文字コードUTF8対応、BOM消し対応
 
+■WorkbookSheetList 
+SheetList の名前定義を、マクロから行う。
+
 ■SearchTextBoxText
 ・未完成
 ■ReplaceTextboxText
