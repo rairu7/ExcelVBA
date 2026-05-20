@@ -11,7 +11,7 @@ Attribute VB_Name = "Module0"
 '// Module7: MakeSheets
 '// Module8: OpenInOtherApp
 '// Module9: not used
-'// ModuleA: not used
+'// ModuleA: CreateFileLinks
 '// ModuleB: not used
 '// ModuleC: not used
 '// ModuleD: Others
@@ -26,7 +26,7 @@ Attribute VB_Name = "Module0"
 '// B: BackColorLightBlue
 '// C: BackColorTransparent
 '// D: FontColorDefault
-'// E:
+'// E: DrawImageBorder
 '// F: FloatingComment/セルの書式設定
 '// G: BackColorGray
 '// H: ReplaceTextBoxText（未完成）
@@ -76,26 +76,61 @@ Sub ExportModules()
 
 
     ' エクスポート先
-    Dim exportDir As String
-    exportDir = docPath & "develop\excel_vba\sources_git\ショートカット一覧\StandardModules\"
+    Dim exportDirJIS As String
+    Dim exportDirUTF As String
+    exportDirJIS = docPath & "develop\excel_vba\sources_git\ショートカット一覧\StandardModulesTemp\"
+    exportDirUTF = docPath & "develop\excel_vba\sources_git\ショートカット一覧\StandardModules\"
     
-    ' エクスポートするファイル形式
+    ' ファイル形式
     Dim extension As String
 '    extension = ".bas"
     extension = ".vba"
     
-    ' ★要確認★
+    ' 文字コード変換用
+'    Dim srcFile As String
+    Dim dstFile As String
+    Dim streamIn As Object
+    Dim streamOut As Object
+    Dim fileText As String
+    
+    ' ★Module0～9のエクスポート
     moduleCount = 9
-
     For iNumber = 0 To moduleCount
         ' エクスポートするモジュールの名前と保存先
         moduleName = "Module" & iNumber
-        exportPath = exportDir & moduleName & extension
+        exportPath = exportDirJIS & moduleName & extension
 
         ' モジュールをエクスポート
         ThisWorkbook.VBProject.VBComponents(moduleName).Export exportPath
+    
+        ' 文字コード変換_入力ストリーム
+        Set streamIn = CreateObject("ADODB.Stream")
+        With streamIn
+            .Charset = "Shift-JIS"
+            .Open
+            .LoadFromFile exportPath
+            fileText = .ReadText
+            .Close
+        End With
+    
+        ' 文字コード変換_出力ストリーム
+        dstFile = exportDirUTF & moduleName & extension
+        Set streamOut = CreateObject("ADODB.Stream")
+        With streamOut
+            .Charset = "UTF-8"
+            .Open
+            .WriteText fileText
+            .SaveToFile dstFile, 2 ' 2 = 上書き保存
+            .Close
+        End With
+
+        ' クリーンアップ
+        Set streamIn = Nothing
+        Set streamOut = Nothing
     Next
     
+    
+    ' ★ModuleA～Fのエクスポート
     Dim Alphas(6) As String
     Alphas(0) = "A"
     Alphas(1) = "B"
@@ -103,19 +138,46 @@ Sub ExportModules()
     Alphas(3) = "D"
     Alphas(4) = "E"
     Alphas(5) = "F"
-    
     For iNumber = 0 To 5
         ' エクスポートするモジュールの名前と保存先
         moduleName = "Module" & Alphas(iNumber)
-        exportPath = exportDir & moduleName & extension
+        exportPath = exportDirJIS & moduleName & extension
 
         ' モジュールをエクスポート
         ThisWorkbook.VBProject.VBComponents(moduleName).Export exportPath
+    
+        ' 文字コード変換_入力ストリーム
+        Set streamIn = CreateObject("ADODB.Stream")
+        With streamIn
+            .Charset = "Shift-JIS"
+            .Open
+            .LoadFromFile exportPath
+            fileText = .ReadText
+            .Close
+        End With
+    
+        ' 文字コード変換_出力ストリーム
+        dstFile = exportDirUTF & moduleName & extension
+        Set streamOut = CreateObject("ADODB.Stream")
+        With streamOut
+            .Charset = "UTF-8"
+            .Open
+            .WriteText fileText
+            .SaveToFile dstFile, 2 ' 2 = 上書き保存
+            .Close
+        End With
+
+        ' クリーンアップ
+        Set streamIn = Nothing
+        Set streamOut = Nothing
     Next
+    
     
     Set objShell = Nothing
     
 End Sub
+
+
 
 Sub ExportForm()
 Attribute ExportForm.VB_ProcData.VB_Invoke_Func = " \n14"

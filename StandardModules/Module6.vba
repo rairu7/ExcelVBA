@@ -6,6 +6,7 @@ Attribute VB_Name = "Module6"
 
 
 
+' 行を追加して罫線を引く（テストエビデンス作成用）
 Sub InsertRowsAndBorders()
     Dim rng As Range
     Dim SelectedRange As Range
@@ -35,9 +36,8 @@ Sub InsertRowsAndBorders()
 End Sub
 
 
-
 ' InsertRowsAboveWithValueInColumnA Macro
-' A列を範囲選択中に、A列に値のある行の上にそれぞれ30行追加する
+' A列を範囲選択中に、A列に値のある行の上にそれぞれ30行追加する. 行を追加して罫線を引く（テストエビデンス作成用）
 ' Keyboard Shortcut: -
 Sub InsertRowsAboveWithValueInColumnA()
 
